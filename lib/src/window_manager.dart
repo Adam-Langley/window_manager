@@ -125,7 +125,7 @@ class WindowManager {
     }
   }
 
-  Future<void> setOptions(WindowOptions options){
+  Future<void> setOptions(WindowOptions options) async {
     if (options.titleBarStyle != null) {
       await setTitleBarStyle(
         options!.titleBarStyle!,
