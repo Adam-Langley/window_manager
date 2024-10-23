@@ -116,7 +116,17 @@ class WindowManager {
   ]) async {
     await _channel.invokeMethod('waitUntilReadyToShow');
 
-    if (options?.titleBarStyle != null) {
+    if (options != null) {
+      await setOptions(options);
+    }
+    
+    if (callback != null) {
+      callback();
+    }
+  }
+
+  Future<void> setOptions(WindowOptions options){
+    if (options.titleBarStyle != null) {
       await setTitleBarStyle(
         options!.titleBarStyle!,
         windowButtonVisibility: options.windowButtonVisibility ?? true,
@@ -127,30 +137,27 @@ class WindowManager {
     if (await isMaximized()) await unmaximize();
     if (await isMinimized()) await restore();
 
-    if (options?.size != null) await setSize(options!.size!);
-    if (options?.center == true) await setAlignment(Alignment.center);
-    if (options?.minimumSize != null) {
+    if (options.size != null) await setSize(options!.size!);
+    if (options.center == true) await setAlignment(Alignment.center);
+    if (options.minimumSize != null) {
       await setMinimumSize(options!.minimumSize!);
     }
-    if (options?.maximumSize != null) {
+    if (options.maximumSize != null) {
       await setMaximumSize(options!.maximumSize!);
     }
-    if (options?.alwaysOnTop != null) {
+    if (options.alwaysOnTop != null) {
       await setAlwaysOnTop(options!.alwaysOnTop!);
     }
-    if (options?.fullScreen != null) await setFullScreen(options!.fullScreen!);
-    if (options?.backgroundColor != null) {
+    if (options.fullScreen != null) await setFullScreen(options!.fullScreen!);
+    if (options.backgroundColor != null) {
       await setBackgroundColor(options!.backgroundColor!);
     }
-    if (options?.skipTaskbar != null) {
+    if (options.skipTaskbar != null) {
       await setSkipTaskbar(options!.skipTaskbar!);
     }
-    if (options?.title != null) await setTitle(options!.title!);
-
-    if (callback != null) {
-      callback();
-    }
+    if (options.title != null) await setTitle(options!.title!);    
   }
+
 
   /// Force closing the window.
   Future<void> destroy() async {
